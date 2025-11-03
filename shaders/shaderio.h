@@ -107,6 +107,8 @@ struct FrameInfo
   int sortingMethod        DEFAULT(SORTING_GPU_SYNC_RADIX);
   float frustumDilation    DEFAULT(0.2f);           // for frustum culling, 2% scale
   float alphaCullThreshold DEFAULT(1.0f / 255.0f);  // for alpha culling
+  
+  float timeS DEFAULT(0.0f);
 };
 
 // TODO will be used for model transformation

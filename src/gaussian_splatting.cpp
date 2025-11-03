@@ -24,6 +24,7 @@
 #include "utilities.h"
 
 #include <nvh/misc.hpp>
+#include <chrono>
 #include <glm/gtc/packing.hpp>  // Required for half-float operations
 
 GaussianSplatting::GaussianSplatting(std::shared_ptr<nvvkhl::ElementProfiler>            profiler,
@@ -216,6 +217,9 @@ void GaussianSplatting::updateAndUploadFrameInfoUBO(VkCommandBuffer cmd, const u
   m_frameInfo.basisViewport          = glm::vec2(1.0f / m_viewSize.x, 1.0f / m_viewSize.y);
   m_frameInfo.focal                  = glm::vec2(focalLengthX, focalLengthY);
   m_frameInfo.inverseFocalAdjustment = 1.0f / focalAdjustment;
+
+  auto endTime  = std::chrono::high_resolution_clock::now();
+  m_frameInfo.timeS                 = (float)(std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_startTime).count() / 1000.0f);
 
   vkCmdUpdateBuffer(cmd, m_frameInfoBuffer.buffer, 0, sizeof(shaderio::FrameInfo), &m_frameInfo);
 
@@ -583,7 +587,7 @@ bool GaussianSplatting::initShaders(void)
   // generate the shader modules
   m_shaders.distShader   = m_shaderManager.createShaderModule(VK_SHADER_STAGE_COMPUTE_BIT, "dist.comp.glsl", prepends);
   m_shaders.vertexShader = m_shaderManager.createShaderModule(VK_SHADER_STAGE_VERTEX_BIT, "raster.vert.glsl", prepends);
-  m_shaders.meshShader = m_shaderManager.createShaderModule(VK_SHADER_STAGE_MESH_BIT_EXT, "raster.mesh.glsl", prepends);
+  m_shaders.meshShader = m_shaderManager.createShaderModule(VK_SHADER_STAGE_MESH_BIT_EXT, "raster_swing.mesh.glsl", prepends);
   m_shaders.fragmentShader = m_shaderManager.createShaderModule(VK_SHADER_STAGE_FRAGMENT_BIT, "raster.frag.glsl", prepends);
 
   if(!m_shaderManager.areShaderModulesValid())
@@ -748,6 +752,8 @@ void GaussianSplatting::initPipelines()
       m_graphicsPipeline = pgen.createPipeline();
       m_dutil->setObjectName(m_graphicsPipeline, "PipelineVertexShader");
     }
+
+    m_startTime = std::chrono::high_resolution_clock::now();
   }
 }
 

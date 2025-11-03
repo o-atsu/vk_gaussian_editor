@@ -256,6 +256,8 @@ private:  // Attributes
   // cpu sorter feedback for ui
   double m_distTime = 0.0;  // distance compute time in ms
   double m_sortTime = 0.0;  // sorting compute time in ms
+  
+  std::chrono::high_resolution_clock::time_point m_startTime;  // sorting compute time in ms
 
   //
   nvvkhl::Application*                     m_app{nullptr};

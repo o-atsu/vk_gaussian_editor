@@ -52,6 +52,7 @@
 #extension GL_GOOGLE_include_directive : require
 #include "shaderio.h"
 #include "common.glsl"
+#include "sdfs.glsl"
 
 // Parallel Processing : Each global invocation (thread) processes one splat.
 // Batch Processing : The workgroup can process up to RASTER_MESH_WORKGROUP_SIZE splats(outputQuadCount)
@@ -85,8 +86,9 @@ layout(set = 0, binding = BINDING_INDIRECT_BUFFER, scalar) buffer _indirect
 
 vec3 Swing(vec3 pos)
 {
-  return pos + 10 * sin(frameInfo.timeS);
+  return pos + pos * frameInfo.timeS * vec3(sdBox(pos, vec3(0.3f, 0.7f, 0.5f)));
 }
+
 
 void main()
 {

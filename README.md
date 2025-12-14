@@ -1,3 +1,13 @@
+# 3DGSタイムラインエディタ
+
+## 目的
+アート，デモシーンに表現の一つとして変化する3DGaussiansを取り入れたい
+## 概要
+3DGSのアニメーション編集，通しの動画を吐き出すようなDCCツールライクなソフト
+
+以下fork元
+________
+
 # Vulkan Gaussian Splatting
 
 ![image showing the rendering modes on the train 3DGS model](doc/rendering_modes.jpg)

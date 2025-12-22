@@ -420,6 +420,18 @@ void GaussianSplatting::onUIRender()
   }
   ImGui::End();
 
+  if(ImGui::Begin("Timeline Editor"))
+  {
+    // TODO
+    // 開始時間，終了時間を指定
+    // スライダーで時間を制御
+    ImGui::InputInt("FPS", &m_fps);
+    ImGui::InputInt("Start Frame", &m_timelineStartFrame);
+    ImGui::InputInt("End Frame", &m_timelineEndFrame);
+    ImGui::SliderInt("Timeline", &m_currentFrame, m_timelineStartFrame, m_timelineEndFrame);
+  }
+  ImGui::End();
+
   if(ImGui::Begin("Memory Statistics"))
   {
     if(ImGui::BeginTable("Scene stats", 4, ImGuiTableFlags_None))

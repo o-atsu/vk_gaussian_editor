@@ -218,8 +218,7 @@ void GaussianSplatting::updateAndUploadFrameInfoUBO(VkCommandBuffer cmd, const u
   m_frameInfo.focal                  = glm::vec2(focalLengthX, focalLengthY);
   m_frameInfo.inverseFocalAdjustment = 1.0f / focalAdjustment;
 
-  auto endTime  = std::chrono::high_resolution_clock::now();
-  m_frameInfo.timeS                 = (float)(std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_startTime).count() / 1000.0f);
+  m_frameInfo.timeS = (float)m_currentFrame / (float)m_fps;
 
   vkCmdUpdateBuffer(cmd, m_frameInfoBuffer.buffer, 0, sizeof(shaderio::FrameInfo), &m_frameInfo);
 

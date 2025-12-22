@@ -425,10 +425,14 @@ void GaussianSplatting::onUIRender()
     // TODO
     // 開始時間，終了時間を指定
     // スライダーで時間を制御
-    ImGui::InputInt("FPS", &m_fps);
-    ImGui::InputInt("Start Frame", &m_timelineStartFrame);
-    ImGui::InputInt("End Frame", &m_timelineEndFrame);
+    ImGui::Checkbox("Play", &m_playing);
+    ImGui::DragFloat("Play Speed", &m_playSpeed);
+    ImGui::InputInt("FPS", &m_timelineFps);
+    ImGui::DragInt("Start Frame", &m_timelineStartFrame);
+    ImGui::DragInt("End Frame", &m_timelineEndFrame);
+    ImGui::BeginDisabled(m_playing);
     ImGui::SliderInt("Timeline", &m_currentFrame, m_timelineStartFrame, m_timelineEndFrame);
+    ImGui::EndDisabled();
   }
   ImGui::End();
 

@@ -260,10 +260,13 @@ private:  // Attributes
   std::chrono::high_resolution_clock::time_point m_startTime;  // sorting compute time in ms
 
   // TimeLine editor settings
-  int m_fps                = 30;
-  int m_timelineStartFrame = 0;
-  int m_timelineEndFrame   = 300;
-  int m_currentFrame   = 0;
+  bool   m_playing            = false;
+  float  m_playSpeed              = 1.0f;
+  int    m_timelineFps        = 30;
+  int    m_timelineStartFrame = 0;
+  int    m_timelineEndFrame   = 300;
+  int    m_currentFrame       = 0;
+  double m_elapsedTime        = 0.0;
 
   //
   nvvkhl::Application*                     m_app{nullptr};

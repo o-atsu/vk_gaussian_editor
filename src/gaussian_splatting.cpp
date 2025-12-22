@@ -218,7 +218,25 @@ void GaussianSplatting::updateAndUploadFrameInfoUBO(VkCommandBuffer cmd, const u
   m_frameInfo.focal                  = glm::vec2(focalLengthX, focalLengthY);
   m_frameInfo.inverseFocalAdjustment = 1.0f / focalAdjustment;
 
-  m_frameInfo.timeS = (float)m_currentFrame / (float)m_fps;
+  if(m_playing)
+  {
+    m_elapsedTime += (double)m_timelineFps / (double)ImGui::GetIO().Framerate * (double)m_playSpeed;
+    if (m_timelineEndFrame < m_elapsedTime)
+    {
+      m_elapsedTime = (double)m_timelineStartFrame;
+    }
+    else if (m_elapsedTime < m_timelineStartFrame)
+    {
+      m_elapsedTime = (double)m_timelineEndFrame;
+    }
+    m_currentFrame = (int)m_elapsedTime;
+  }
+  else
+  {
+    m_elapsedTime = (double)m_currentFrame;
+  }
+
+  m_frameInfo.timeS = m_elapsedTime;
 
   vkCmdUpdateBuffer(cmd, m_frameInfoBuffer.buffer, 0, sizeof(shaderio::FrameInfo), &m_frameInfo);
 

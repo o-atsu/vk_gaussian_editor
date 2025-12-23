@@ -428,8 +428,7 @@ void GaussianSplatting::onUIRender()
     ImGui::Checkbox("Play", &m_playing);
     ImGui::DragFloat("Play Speed", &m_playSpeed);
     ImGui::InputInt("FPS", &m_timelineFps);
-    ImGui::DragInt("Start Frame", &m_timelineStartFrame);
-    ImGui::DragInt("End Frame", &m_timelineEndFrame);
+    ImGui::DragIntRange2("Frame Range", &m_timelineStartFrame, &m_timelineEndFrame);
     ImGui::BeginDisabled(m_playing);
     ImGui::SliderInt("Timeline", &m_currentFrame, m_timelineStartFrame, m_timelineEndFrame);
     ImGui::EndDisabled();

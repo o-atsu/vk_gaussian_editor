@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 
     // bottom panel container
     ImGuiID memoryID = ImGui::DockBuilderSplitNode(viewportID, ImGuiDir_Down, 0.35F, nullptr, &viewportID);
+    ImGui::DockBuilderDockWindow("Timeline Editor", memoryID);
     ImGui::DockBuilderDockWindow("Memory Statistics", memoryID);
     ImGuiID profilerID = ImGui::DockBuilderSplitNode(memoryID, ImGuiDir_Right, 0.33F, nullptr, &memoryID);
     ImGui::DockBuilderDockWindow("Profiler", profilerID);
